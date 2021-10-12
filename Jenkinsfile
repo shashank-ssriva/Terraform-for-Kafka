@@ -36,7 +36,7 @@ pipeline {
         
         steps {
             withAWS(credentials: 'tf_user_ec2') {
-                sh '/opt/homebrew/bin/terraform apply -auto-approve'
+                sh '/Users/shashanksrivastava/terraform.sh'
             }
         }
     }
