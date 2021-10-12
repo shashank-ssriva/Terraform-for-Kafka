@@ -7,7 +7,9 @@ pipeline {
                    return params.Choice == 'Init'
                 }
             }
-            sh script: '/opt/homebrew/bin/terraform init'
+            steps {
+                sh '/opt/homebrew/bin/terraform init'
+            }
     }
     stage('Terraform plan') {
         when {
@@ -16,7 +18,9 @@ pipeline {
                 }
             }
         withAWS(credentials: 'tf_user_ec2') {
-        sh script: '/opt/homebrew/bin/terraform plan'
+        steps {
+                sh '/opt/homebrew/bin/terraform plan'
+            }
       }
     }
   stage('Terraform apply') {
@@ -26,7 +30,9 @@ pipeline {
                 }
             }
         withAWS(credentials: 'tf_user_ec2') {
-    sh script: '/opt/homebrew/bin/terraform apply -auto-approve'
+        steps {
+                sh '/opt/homebrew/bin/terraform apply -auto-approve'
+            }
       }
     }
 }
