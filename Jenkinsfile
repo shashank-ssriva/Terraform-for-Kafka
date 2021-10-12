@@ -38,5 +38,19 @@ pipeline {
             }
         }
     }
+
+  stage('Destroy Kafka Zookeeper EC2 instance') {
+      when {
+                expression { 
+                   return params.Choice == 'Destroy'
+                }
+            }
+        
+        steps {
+            withAWS(credentials: 'tf_user_ec2') {
+                sh '/opt/homebrew/bin/terraform destroy -auto-approve'
+            }
+        }
+    }
 }
 }
