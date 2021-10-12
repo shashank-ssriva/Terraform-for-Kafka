@@ -17,11 +17,13 @@ pipeline {
                    return params.Choice == 'Plan'
                 }
             }
-        withAWS(credentials: 'tf_user_ec2') {
+        
         steps {
+            withAWS(credentials: 'tf_user_ec2') {
                 sh '/opt/homebrew/bin/terraform plan'
             }
-      }
+        }
+      
     }
   stage('Terraform apply') {
       when {
@@ -29,11 +31,12 @@ pipeline {
                    return params.Choice == 'Apply'
                 }
             }
-        withAWS(credentials: 'tf_user_ec2') {
+        
         steps {
+            withAWS(credentials: 'tf_user_ec2') {
                 sh '/opt/homebrew/bin/terraform apply -auto-approve'
             }
-      }
+        }
     }
 }
 }
