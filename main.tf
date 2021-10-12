@@ -29,5 +29,5 @@ output "ip" {
 }
 
 output "login" {
-  value = "ssh ec2-user@${aws_instance.kafka_zookeper.public_ip} -i ${aws_instance.key_file}"
+  value = "ssh ec2-user@${aws_instance.kafka_zookeper.public_ip} -i kafka_ssh_key.pem"
 }
