@@ -14,20 +14,40 @@ provider "aws" {
   region  = "ap-south-1"
 }
 
+resource "aws_security_group" "ssh_access" {
+  name = "ssh_access"
+  description = "SSH access to EC2 nodes"
+  ingress {
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }    
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
 resource "aws_instance" "kafka_zookeper" {
   ami           = "ami-041d6256ed0f2061c"
   instance_type = "t2.micro"
   key_name      = "kafka_ssh_key"
-
+  vpc_security_group_ids  = ["${aws_security_group.ssh_access.id}"]
   tags = {
     Name = "KafkaZookeeper"
   }
 }
 
-output "ip" {
+output "SSH Access Security Group ID" {
+  value = aws_security_group.ssh_access.id
+}
+
+output "Zookeeper EC2 instance public IP" {
   value = aws_instance.kafka_zookeper.public_ip
 }
 
-output "login" {
+output "Zookeeper EC2 instance login" {
   value = "ssh ec2-user@${aws_instance.kafka_zookeper.public_ip} -i kafka_ssh_key.pem"
 }
