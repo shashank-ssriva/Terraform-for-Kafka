@@ -11,6 +11,7 @@ pipeline {
                 sh '/opt/homebrew/bin/terraform init'
             }
     }
+
     stage('Terraform plan') {
         when {
                 expression { 
@@ -25,7 +26,8 @@ pipeline {
         }
       
     }
-  stage('Terraform apply') {
+
+    stage('Create Kafka Zookeeper EC2 instance') {
       when {
                 expression { 
                    return params.Choice == 'Apply'
@@ -39,7 +41,7 @@ pipeline {
         }
     }
 
-  stage('Destroy Kafka Zookeeper EC2 instance') {
+    stage('Destroy Kafka Zookeeper EC2 instance') {
       when {
                 expression { 
                    return params.Choice == 'Destroy'
