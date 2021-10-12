@@ -22,4 +22,12 @@ resource "aws_instance" "kafka_zookeper" {
   tags = {
     Name = "KafkaZookeeper"
   }
+
+  output "ip" {
+    value = aws_instance.kafka_zookeper.public_ip
+  }
+
+  output "login" {
+    value = "ssh ec2-user@${aws_instance.kafka_zookeper.public_ip} -i ${aws_instance.key_file}"
+  }
 }
