@@ -1,5 +1,6 @@
 pipeline {
     agent any
+    stages {
     stage('Initialise Terraform') {
         when {
                 expression { 
@@ -15,7 +16,7 @@ pipeline {
                 }
             }
         withAWS(credentials: 'tf_user_ec2') {
-    sh script: '/opt/homebrew/bin/terraform plan'
+        sh script: '/opt/homebrew/bin/terraform plan'
       }
     }
   stage('Terraform apply') {
@@ -28,5 +29,5 @@ pipeline {
     sh script: '/opt/homebrew/bin/terraform apply -auto-approve'
       }
     }
-   
+}
 }
