@@ -1,14 +1,6 @@
 pipeline {
     agent any
     stages {
-        stage ('User Input') {
-            steps {
-                script {
-                    myStage = input message: 'What stage do you want to run now?', parameters: [AnsibleChoice(choices: 'Yes\nNo', description: '', name: 'Stage')]
-                }
-                echo myStage
-            }
-        }
     stage('Initialise Terraform') {
         when {
                 expression { 
@@ -52,14 +44,12 @@ pipeline {
     stage('Install Kafka Zookeeper') {
         when {
                 expression { 
-                   return params.AnsibleChoice == 'Yes'
+                   return params.Choice == 'Install Kafka'
                 }
             }
         steps {
-            withAWS(credentials: 'tf_user_ec2') {
-                sh '/Users/shashanksrivastava/terraform.sh'
+                sh '/opt/homebrew/bin/ansible-playbook Ansible/install_kafka_zookeeper.yaml'
             }
-        }
     }
 
     stage('Destroy Kafka Zookeeper EC2 instance') {
