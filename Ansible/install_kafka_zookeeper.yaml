@@ -25,7 +25,7 @@
   - name: Copy file with owner and permissions
     ansible.builtin.copy:
       src: zoo.cfg
-      dest: /opt/apache-zookeeper-3.6.3-bin/conf.zoo.cfg
+      dest: /opt/apache-zookeeper-3.6.3-bin/conf/zoo.cfg
 
   - name: Install Zookeeper service
     ansible.builtin.copy:
