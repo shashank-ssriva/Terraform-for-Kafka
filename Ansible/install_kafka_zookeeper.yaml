@@ -6,6 +6,11 @@
     command: wget https://dlcdn.apache.org/zookeeper/zookeeper-3.6.3/apache-zookeeper-3.6.3-bin.tar.gz
     args:
       chdir: /opt
+  
+  - name: Install JDK
+    yum:
+      name: java-1.8.0-openjdk.x86_64
+      state: present
 
   - name: Extract Apache Zookeeper Tarball
     command: tar -xf apache-zookeeper-3.6.3-bin.tar.gz
