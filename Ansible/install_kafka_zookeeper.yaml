@@ -22,7 +22,7 @@
       path: /data/zookeeper
       state: directory
     
-  - name: Copy file with owner and permissions
+  - name: Create Broker server configuration file
     ansible.builtin.copy:
       src: zoo.cfg
       dest: /opt/apache-zookeeper-3.6.3-bin/conf/zoo.cfg
