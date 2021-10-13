@@ -1,0 +1,34 @@
+---
+- hosts: kafka
+  become: true
+  tasks:
+  - name: Download Apache Zookeeper Tarball
+    command: wget https://dlcdn.apache.org/zookeeper/zookeeper-3.6.3/apache-zookeeper-3.6.3-bin.tar.gz
+    args:
+      chdir: /opt
+
+  - name: Extract Apache Zookeeper Tarball
+    command: tar -xf apache-zookeeper-3.6.3-bin.tar.gz
+    args:
+      chdir: /opt
+
+  - name: Create data directory
+    file:
+      path: /data/zookeeper
+      state: directory
+    
+  - name: Copy file with owner and permissions
+    ansible.builtin.copy:
+      src: zoo.cfg
+      dest: /opt/apache-zookeeper-3.6.3-bin/conf.zoo.cfg
+
+  - name: Install Zookeeper service
+    ansible.builtin.copy:
+      src: zk.service
+      dest: /etc/systemd/system/zk.service
+
+  - name: Start Zookeeper service
+    command: systemctl start zk
+
+  - name: Enable Zookeeper service at boot time
+    command: systemctl enable zk
