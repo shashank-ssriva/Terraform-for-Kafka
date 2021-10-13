@@ -30,6 +30,23 @@ resource "aws_security_group" "ssh_access" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+resource "aws_security_group" "zookeeper_inbound" {
+  name = "zookeeper_inbound"
+  description = "Inbound connection to Zookeper nodes"
+  ingress {
+    from_port = 2181
+    to_port = 2181
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }    
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
 resource "aws_instance" "kafka_zookeper" {
   ami           = "ami-041d6256ed0f2061c"
   instance_type = "t2.micro"
