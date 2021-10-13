@@ -48,7 +48,7 @@ pipeline {
                 }
             }
         steps {
-                sh '/opt/homebrew/bin/ansible-playbook -i /Users/shashanksrivastava/ansible_hosts /opt/homebrew/bin/ansible-playbook Ansible/install_kafka_zookeeper.yaml'
+                sh '/opt/homebrew/bin/ansible-playbook -i /Users/shashanksrivastava/ansible_hosts Ansible/install_kafka_zookeeper.yaml'
             }
     }
 
