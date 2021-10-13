@@ -51,7 +51,7 @@ resource "aws_instance" "kafka_zookeper" {
   ami           = "ami-041d6256ed0f2061c"
   instance_type = "t2.micro"
   key_name      = "kafka_ssh_key"
-  vpc_security_group_ids  = ["${aws_security_group.ssh_access.id}"]
+  vpc_security_group_ids  = ["${aws_security_group.ssh_access.id}", "${aws_security_group.zookeeper_inbound.id}"]
   tags = {
     Name = "KafkaZookeeper"
   }
@@ -59,6 +59,10 @@ resource "aws_instance" "kafka_zookeper" {
 
 output "ssh_security_group_id" {
   value = aws_security_group.ssh_access.id
+}
+
+output "zookeeper_inbound_security_group_id" {
+  value = aws_security_group.zookeeper_inbound.id
 }
 
 output "zookeeper_instance_public_ip" {
