@@ -44,7 +44,7 @@ pipeline {
     stage('Install Kafka Zookeeper') {
         when {
                 expression { 
-                   return params.Choice == 'Install Kafka'
+                   return params.Choice == 'Install Kafka Zookeeper'
                 }
             }
         steps {
